@@ -77,7 +77,7 @@ public class HW4
 	 * 
 	 * <a>={a, a^2, a^3...e}   for a in U(n)
 	 */
-	public static Set<Integer> genAinUnitsOfN(int a, int n)
+	public static Set<Integer> gen_a_inUnitsOfN(int a, int n)
 	{
 		if (a <= 0 || n <= 0)
 			throw new IllegalArgumentException();
@@ -119,7 +119,7 @@ public class HW4
 	 * 
 	 * (-1 means infinite order)
 	 */
-	public static int orderOfAforUnitsOfN(int a, int n)
+	public static int orderOf_a_inUnitsOfN(int a, int n)
 	{
 		if (a <= 0 || n <= 0 || a > n)
 			throw new IllegalArgumentException();
@@ -147,7 +147,7 @@ public class HW4
 		
 		println();
 		println("6 is in U(11)");
-		println("<6> = " + genAinUnitsOfN(6, 11));
+		println("<6> = " + gen_a_inUnitsOfN(6, 11));
 		
 		/*
 		int mainZn = 20;
