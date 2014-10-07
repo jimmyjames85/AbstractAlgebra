@@ -1,7 +1,5 @@
 package edu.iastate.math301;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
