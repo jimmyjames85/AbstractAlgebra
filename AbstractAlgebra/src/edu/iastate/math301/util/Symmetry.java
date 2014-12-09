@@ -203,9 +203,9 @@ public class Symmetry implements Comparable<Symmetry>
 	 * }
 	 */
 
-	public Set<Symmetry> generateCyclicGroup()
+	public SymmetricSet generateCyclicGroup()
 	{
-		Set<Symmetry> ret = new TreeSet<Symmetry>();
+		SymmetricSet ret = new SymmetricSet();
 
 		Symmetry product = this;
 		ret.add(product);
@@ -213,6 +213,8 @@ public class Symmetry implements Comparable<Symmetry>
 		{
 			product = this.multOnRightOf(product);
 			ret.add(product);
+			
+			
 		}
 		return ret;
 	}

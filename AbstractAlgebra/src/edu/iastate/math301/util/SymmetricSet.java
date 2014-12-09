@@ -49,10 +49,12 @@ public class SymmetricSet extends TreeSet<Symmetry>
 		{
 			for (Symmetry g : G)
 			{
-				Symmetry gi = g.inverse();
-				Symmetry product = gi.multOnRightOf(k).multOnRightOf(g);
+				
+				Symmetry product = k.multOnLeftOf(g.inverse());
+				product = g.multOnLeftOf(product);
 				if (!this.contains(product))
 					normal = false;
+
 			}
 		}
 		return normal;
@@ -178,6 +180,28 @@ public class SymmetricSet extends TreeSet<Symmetry>
 
 		return ret;
 	}
+	
+	public SymmetricSet leftCoset(Symmetry g)
+	{
+		SymmetricSet ret = new SymmetricSet();
+		
+		for(Symmetry s :this)
+			ret.add(g.multOnLeftOf(s));
+
+		return ret;
+	}
+	
+	public SymmetricSet rightCoset(Symmetry g)
+	{
+		SymmetricSet ret = new SymmetricSet();
+		
+		for(Symmetry s :this)
+			ret.add(g.multOnRightOf(s));
+
+		return ret;
+	}
+	
+	
 
 	public static SymmetricSet createSymmetricGroup(int n)
 	{
@@ -233,8 +257,34 @@ public class SymmetricSet extends TreeSet<Symmetry>
 		SymmetricSet K4 = SymmetricSet.createK4();
 		SymmetricSet S4 = SymmetricSet.createSymmetricGroup(4);
 		
+		
+		
+		Symmetry h = new Symmetry("(12)",4);
+		SymmetricSet H = h.generateCyclicGroup();
+		
+		for(Symmetry g : S4)
+		{
+			Symmetry product = h.multOnLeftOf(g.inverse());
+			product = g.multOnLeftOf(product);
+			H.add(product);
+		}
+		
+		for(Symmetry g: S4)
+		{
+			SymmetricSet leftCoset = H.leftCoset(g);
+			SymmetricSet rightCoset = H.rightCoset(g);
+			println (leftCoset);
+			println(rightCoset);
+		}
+		println(H.isNormalInG(S4));
+
+		/*
+
+		
+		
+		
 		println(S4.isNormalInG(K4));
-		println(D4.isAGroup());
+		println(D4.isAGroup());*/
 		
 
 	}	
