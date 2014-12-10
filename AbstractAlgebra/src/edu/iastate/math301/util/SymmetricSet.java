@@ -277,6 +277,7 @@ public class SymmetricSet extends TreeSet<Symmetry>
 			println(rightCoset);
 		}
 		println(H.isNormalInG(S4));
+		println("update");
 
 		/*
 
