@@ -7,6 +7,7 @@ import java.util.TreeSet;
 public class Symmetry implements Comparable<Symmetry>
 {
 
+	
 	public int compareTo(Symmetry o)
 	{
 		return this.toString().compareTo(o.toString());
@@ -18,6 +19,30 @@ public class Symmetry implements Comparable<Symmetry>
 	{
 
 	}
+	
+	public int getN()
+	{
+		return map.length;
+	}
+	
+	public Set<Integer> fixedPointSet()
+	{
+		TreeSet<Integer> ret = new TreeSet<Integer>();
+		
+		for(int i=1;i<=map.length;i++)
+		{
+			if(actOn(i)==i)
+				ret.add(i);
+		}
+		return ret;
+	}	
+	public int actOn(int n)
+	{
+		if(n<=0 || n>this.map.length)
+			throw new IllegalArgumentException();
+		
+		return this.map[n-1];
+	}
 
 	public Symmetry(int map[])
 	{
@@ -26,7 +51,7 @@ public class Symmetry implements Comparable<Symmetry>
 			this.map[i] = map[i];
 	}
 
-	public Symmetry(String symmetry, int Sn)
+	public Symmetry(String symmetry, int permutationSize)
 	{
 		symmetry = symmetry.replaceAll(" ", "");
 
@@ -36,7 +61,7 @@ public class Symmetry implements Comparable<Symmetry>
 		int right = symmetry.indexOf(")", left);
 		while (left != -1 && right != -1 && right > left)
 		{
-			int mapc[] = new int[Sn];
+			int mapc[] = new int[permutationSize];
 			for (int i = 0; i < mapc.length; i++)
 				mapc[i] = i + 1;
 
@@ -65,8 +90,8 @@ public class Symmetry implements Comparable<Symmetry>
 			product = product.multOnRightOf(list.get(i));
 		}
 
-		this.map = new int[Sn];
-		for (int i = 0; i < Sn; i++)
+		this.map = new int[permutationSize];
+		for (int i = 0; i < permutationSize; i++)
 			this.map[i] = product.map[i];
 	}
 
@@ -205,7 +230,7 @@ public class Symmetry implements Comparable<Symmetry>
 
 	public SymmetricSet generateCyclicGroup()
 	{
-		SymmetricSet ret = new SymmetricSet();
+		SymmetricSet ret = new SymmetricSet(map.length);
 
 		Symmetry product = this;
 		ret.add(product);
