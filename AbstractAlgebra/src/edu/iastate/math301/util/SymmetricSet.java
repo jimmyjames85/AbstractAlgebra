@@ -12,6 +12,7 @@ import java.util.TreeSet;
 public class SymmetricSet extends TreeSet<Symmetry>
 {
 
+	
 	private static final long serialVersionUID = 1L;
 
 	private int permutationSize;
@@ -409,24 +410,110 @@ public class SymmetricSet extends TreeSet<Symmetry>
 		System.exit(1);
 	}
 
+	public static int colorCube(int numberOfColors)
+	{
+		int noc = numberOfColors;
+		String arr[] = {  "(1536)", "(1234)", "(2546)"};
+		SymmetricSet cube = SymmetricSet.createSymmetricSet(arr, 6);
+		cube = cube.generateGroup();
+		
+		println("G = " + cube);
+		println(cube.info(SymmetricSet.createSymmetricGroup(6)));
+		println();
+		
+		
+		ArrayList<Symmetry> oneCycle = new ArrayList<Symmetry>();
+		ArrayList<Symmetry> twoCycle = new ArrayList<Symmetry>();
+		ArrayList<Symmetry> threeCycle = new ArrayList<Symmetry>();
+		for(Symmetry g: cube)
+		{
+			int count = g.getCyleCount();
+			if(count==1)
+				oneCycle.add(g);
+			else if(count==2)
+				twoCycle.add(g);
+			else if(count==3)
+				threeCycle.add(g);
+		}
+		
+		int colSize =20;
+		printrn(colSize,oneCycle.toArray());
+		printrn(colSize,twoCycle.toArray());
+		printrn(colSize,threeCycle.toArray());
+		println();
+		println();
+		printrn(colSize,"Cube Symmetry","Fix Point Set", "# Free edges", "# of ways to color");
+		int totalWaysToColor = 0;
+		for(Symmetry s: cube)
+		{
+			Set<Integer> fixedPointSet = s.fixedPointSet();
+			int freeSides = s.fixedPointSet().size();
+			
+			//ways to color "free" edges
+			int waysToColorFreeEdges = (int)Math.round(Math.pow(numberOfColors,freeSides));
+			int cycleCount = s.getCyleCount();
+			if(s.equals(cube.identity()))
+				cycleCount= 0;
+
+			int waysToColorCycle = (int)Math.round(Math.pow(numberOfColors,cycleCount));
+			
+			int waysToColor = waysToColorCycle*waysToColorFreeEdges;
+			printr(colSize, s);
+			printr(colSize, fixedPointSet);
+			printr(colSize, freeSides);
+			printrn(noc, waysToColor + " = " + noc  + "^" + cycleCount + " * " + noc + "^" + freeSides);//"^" +  freeSides);
+			totalWaysToColor += waysToColor;
+		}
+		
+		
+		printrn(colSize,"","","     Total = ","" + totalWaysToColor + "/24");
+		printrn(colSize,"","","     Total = ","" + totalWaysToColor /24);
+		
+		return totalWaysToColor / 24;
+		
+	}
+	
 	public static void main(String[] args)
 	{
-		
+		colorCube(3);
+		/*
 		SymmetricSet D3 = SymmetricSet.createD3();
 		SymmetricSet D4 = SymmetricSet.createD4();
 		SymmetricSet K4 = SymmetricSet.createK4();
-
 		SymmetricSet S3 = SymmetricSet.createSymmetricGroup(3);
 		SymmetricSet S4 = SymmetricSet.createSymmetricGroup(4);
 		SymmetricSet S5 = SymmetricSet.createSymmetricGroup(5);
 		SymmetricSet S6 = SymmetricSet.createSymmetricGroup(6);
 		SymmetricSet A4 = SymmetricSet.createAlternatingGroup(4);
-		//String arr[] = { "()", "(123)", "(132)", "(45)", "(123)(45)", "(132)(45)" };
+		String arr[]= {"()","(12)","(345)","(354)","(12)(345)","(12)(354)"};
 		//String arr[]= {"()", "(12)(3456)", "(35)(46)", "(12)(3654)"};
 		
 		
+
+		end();
+		println();
 		
-		String arr[]= {"()","(12)","(345)","(354)","(12)(345)","(12)(354)"};
+		for(Symmetry gg:D4)
+		{
+
+			ArrayList<String> row = new ArrayList<String>();
+			row.add(gg.toString()+" = ");
+			for(Symmetry x:D4)
+			{
+				Symmetry p = x.multOnLeftOf(gg.multOnLeftOf(x.inverse()));
+				if(p.equals(gg))
+					row.add(gg.toString());
+			}
+			
+			printrn(10, row.toArray());
+		}
+		
+		
+
+		//	println(D4.center());
+		end();
+		
+		
 		SymmetricSet G = SymmetricSet.createSymmetricSet(arr, 6);
 
 		G = new SymmetricSet(6);
@@ -438,7 +525,7 @@ public class SymmetricSet extends TreeSet<Symmetry>
 		
 		for (int i=1;i<=G.getPermutationSize();i++)
 			println(G.orbitOf(i));
-
+*/
 /*
 		println();
 		for (Symmetry g : G)

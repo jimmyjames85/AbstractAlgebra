@@ -7,7 +7,7 @@ import java.util.TreeSet;
 public class Symmetry implements Comparable<Symmetry>
 {
 
-	
+	//Symmetries aren't really comparable but this is so the SymmetricSet class can distinguish between symmetries.
 	public int compareTo(Symmetry o)
 	{
 		return this.toString().compareTo(o.toString());
@@ -19,33 +19,53 @@ public class Symmetry implements Comparable<Symmetry>
 	{
 
 	}
-	
+
+	public int getCyleCount()
+	{
+		String s = this.toString();
+
+		if (s.equals("("))
+			return 2;
+
+		int count = 0;
+		for (int i = 0; i < s.length(); i++)
+		{
+			if (s.charAt(i) == ')')
+				count++;
+		}
+		return count;
+	}
+
 	public int getN()
 	{
 		return map.length;
 	}
-	
+
 	public Set<Integer> fixedPointSet()
 	{
 		TreeSet<Integer> ret = new TreeSet<Integer>();
-		
-		for(int i=1;i<=map.length;i++)
+
+		for (int i = 1; i <= map.length; i++)
 		{
-			if(actOn(i)==i)
+			if (actOn(i) == i)
 				ret.add(i);
 		}
 		return ret;
-	}	
+	}
+
 	public int actOn(int n)
 	{
-		if(n<=0 || n>this.map.length)
+		if (n <= 0 || n > this.map.length)
 			throw new IllegalArgumentException();
-		
-		return this.map[n-1];
+
+		return this.map[n - 1];
 	}
 
 	public Symmetry(int map[])
 	{
+		if (map.length > 9)
+			throw new IllegalArgumentException("Unsupported permutation size");
+
 		this.map = new int[map.length];
 		for (int i = 0; i < map.length; i++)
 			this.map[i] = map[i];
@@ -53,6 +73,8 @@ public class Symmetry implements Comparable<Symmetry>
 
 	public Symmetry(String symmetry, int permutationSize)
 	{
+		if (permutationSize > 9)
+			throw new IllegalArgumentException("Unsupported permutation size");
 		symmetry = symmetry.replaceAll(" ", "");
 
 		ArrayList<Symmetry> list = new ArrayList<Symmetry>();
@@ -238,8 +260,7 @@ public class Symmetry implements Comparable<Symmetry>
 		{
 			product = this.multOnRightOf(product);
 			ret.add(product);
-			
-			
+
 		}
 		return ret;
 	}

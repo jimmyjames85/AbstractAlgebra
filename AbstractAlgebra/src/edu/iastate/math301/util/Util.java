@@ -1,8 +1,5 @@
 package edu.iastate.math301.util;
 
-import static edu.iastate.math301.util.Util.cloneList;
-import static edu.iastate.math301.util.Util.cloneSet;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -17,6 +14,37 @@ public class Util
 	{
 		println("");
 	}
+
+	public static String space(int colSize, String s)
+	{
+		
+		if(s.length()>=colSize)
+			return s;
+		
+		String ret = s;
+		
+		for(int i=s.length(); i<=colSize;i++)
+			ret+=" ";
+		
+		return ret;
+	}
+	
+	public static void printr(int colSize, Object...o)
+	{
+		for(Object i: o)
+			print(space(colSize , i.toString()));
+	}
+	
+	
+	public static void printrn(int colSize, Object...o)
+	{
+		printr(colSize,o);
+		println();
+	}
+	
+	
+	
+	
 	public static void println(Object o)
 	{
 		System.out.println(o.toString());
