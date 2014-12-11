@@ -464,8 +464,6 @@ public class SymmetricSet extends TreeSet<Symmetry>
 			printrn(noc, waysToColor + " = " + noc  + "^" + cycleCount + " * " + noc + "^" + freeSides);//"^" +  freeSides);
 			totalWaysToColor += waysToColor;
 		}
-		
-		
 		printrn(colSize,"","","     Total = ","" + totalWaysToColor + "/24");
 		printrn(colSize,"","","     Total = ","" + totalWaysToColor /24);
 		

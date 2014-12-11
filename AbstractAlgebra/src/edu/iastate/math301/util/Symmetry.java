@@ -222,7 +222,7 @@ public class Symmetry implements Comparable<Symmetry>
 
 	/*
 	 * private List<Integer> permute(List<Integer> a)
-	 * {
+	 * {   
 	 * 
 	 * 
 	 * return ret;
